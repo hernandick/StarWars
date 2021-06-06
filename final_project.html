@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Starwars Character</title>
+
+    <style>
+        body{
+            position: relative;
+        }
+
+        .grid{
+            display: grid; 
+            position: absolute;
+            top: 40px;
+            /* border: 1px solid red; */
+            grid-template-columns: auto auto;
+            left: 40%;
+            margin: auto;
+            column-width: 70px;
+            grid-column-gap: 30px;         
+        }
+        /* .item{
+            border: 1px solid red;
+        } */
+        #btn{
+            display: inline block;
+            position: absolute;
+            left: 40%;
+            top: 125px;          
+        }
+
+        #img{
+            position: absolute;
+            height: 200px;
+            width: auto;
+            left: 60%
+        }
+
+    </style>
+</head>
+<body>
+    
+
+    <div class="grid">
+        <div class="item title">Name: </div>
+        <div class="item" id="name"></div>
+        <div class="item title">Birth Year:</div>
+        <div class="item" id="birthYear"></div>
+        <div class="item title">Mass:</div>
+        <div class="item" id="mass"></div>
+        <div class="item title">Hair Color</div>
+        <div class="item" id="hairColor"></div>
+    </div>
+
+    <button id = "btn"> New Character! </button>
+
+    <img id="img" src="" alt="">
+    
+
+    <script>
+        const nameInput = document.getElementById("name");
+
+        const birthYearInput = document.getElementById("birthYear");
+     
+
+        const massInput = document.getElementById("mass");
+     
+
+        const hairColorInput  = document.getElementById("hairColor");
+
+
+        const buttonElement = document.getElementById('btn');
+
+        buttonElement.addEventListener('click', () => {
+       
+
+        let randomNumber = Math.ceil(Math.random()*83);
+
+        let url = `https://swapi.dev/api/people/${randomNumber}/`
+
+        console.log(url)
+
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            let character = data
+            let name = character['name']
+            let birthYear = character['birth_year']
+            let mass = character['mass']
+            let hairColor = character['hair_color']
+            let id = character["id"]
+
+
+            nameInput.innerText = name
+            birthYearInput.innerText = birthYear
+            massInput.innerText = mass
+            hairColorInput.innerText = hairColor 
+
+            fetch("https://akabab.github.io/starwars-api/api/all.json")
+            .then(response => response.json())
+            .then(data1 => {
+            let character1 = data1
+
+
+            function getImageUrl(){
+                for(let i= 0; i < 87; i++){
+                    if (character1[i]["name"] == name){
+                        let imgUrl = character1[i]["image"]
+                        const img = document.getElementById("img")
+                        img.src = imgUrl
+                        console.log(imgUrl)
+                    }
+                    
+                }
+            }
+            getImageUrl()
+            
+        
+            })
+
+        })
+            
+        })
+
+    </script>
+</body>
+</html>
