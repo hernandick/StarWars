@@ -5,22 +5,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Starwars Character</title>
+    <link rel="shortcut icon" type="image/jpg" href="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fpngimg.com%2Fuploads%2Fdarth_vader%2Fdarth_vader_PNG6.png&f=1&nofb=1"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 
     <style>
         body{
+            margin: 0;
+            padding: 0;
             position: relative;
+            background-image: url("https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=640&q=80");
+            background-repeat: no-repeat;
+            background-size: cover;
+            
         }
+
+        .container{
+            display: flex;
+            justify-content: center;
+            /* position: absolute; */
+            /* top: 50px; */
+            width: 400px;
+            height: 400px;
+            margin: 100px auto;
+            /* left: auto;
+            right: auto; */
+            
+
+        }
+
+
 
         .grid{
             display: grid; 
             position: absolute;
-            top: 40px;
+            top: 205px;
             /* border: 1px solid red; */
             grid-template-columns: auto auto;
-            left: 40%;
-            margin: auto;
+            /* left: 40%;
+            margin: auto; */
             column-width: 70px;
-            grid-column-gap: 30px;         
+            grid-column-gap: 30px;  
+            color: antiquewhite;  
+            font-family: 'Bebas Neue', cursive;     
         }
         /* .item{
             border: 1px solid red;
@@ -28,21 +55,39 @@
         #btn{
             display: inline block;
             position: absolute;
-            left: 40%;
-            top: 125px;          
+            /* left: 40%; */
+            top: 290px;          
         }
+    #btn {
+        text-align: center;
+        font-family: 'Coda Caption', sans-serif;
+        font-weight: 800;
+        font-size: calc(20vw / var(--word-total) ); /* Overriden below for fluid typography test */
+        line-height: 1.0;
+        letter-spacing: -0.03em;
+        transform: perspective(300px) scaleY(1.5) rotateX(-40deg);
+        transform-style: preserve-3d; /* Important for establishing a shared 3D space for all the layers */
+        --layer-depth: 0.32em;
+        background-color: rgba(250, 250, 250, 0.988);
+        font-size: 20px;
+}
+        #btn:hover{
+            cursor: pointer;
+            background-color: blanchedalmond;
+
+}
 
         #img{
             position: absolute;
             height: 200px;
             width: auto;
-            left: 60%
+            /* left: 40% */
         }
 
     </style>
 </head>
 <body>
-    
+    <div class="container">
 
     <div class="grid">
         <div class="item title">Name: </div>
@@ -58,6 +103,7 @@
     <button id = "btn"> New Character! </button>
 
     <img id="img" src="" alt="">
+</div>
     
 
     <script>
@@ -73,6 +119,17 @@
 
 
         const buttonElement = document.getElementById('btn');
+
+        
+        let character1 = {}
+        
+        fetch("https://akabab.github.io/starwars-api/api/all.json")
+            .then(response => response.json())
+            .then(data1 => {
+            character1 = data1
+        })
+
+
 
         buttonElement.addEventListener('click', () => {
        
@@ -100,12 +157,6 @@
             massInput.innerText = mass
             hairColorInput.innerText = hairColor 
 
-            fetch("https://akabab.github.io/starwars-api/api/all.json")
-            .then(response => response.json())
-            .then(data1 => {
-            let character1 = data1
-
-
             function getImageUrl(){
                 for(let i= 0; i < 87; i++){
                     if (character1[i]["name"] == name){
@@ -113,14 +164,12 @@
                         const img = document.getElementById("img")
                         img.src = imgUrl
                         console.log(imgUrl)
-                    }
-                    
+                    }   
                 }
             }
+
             getImageUrl()
-            
-        
-            })
+             
 
         })
             
